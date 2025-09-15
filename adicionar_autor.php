@@ -1,37 +1,45 @@
+<?php
+include "../conexao.php";
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+    $titulo = trim($_POST['titulo']);
+    $ano = $_POST['ano'];
+    $capa = $_FILES['capa']['name'];
+    $autor = $_POST['autor'];
 
-<?php include 'conexao.php'; ?>
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <title>Adicionar Autor</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<div class="container mt-4">
-    <h1>Adicionar Novo Autor</h1>
-    <form action="processa_autor.php" method="POST" enctype="multipart/form-data">
-        <div class="mb-3">
-            <label>Nome*</label>
-            <input type="text" name="nome" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label>Data de Nascimento</label>
-            <input type="date" name="data_nascimento" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label>Nacionalidade</label>
-            <input type="text" name="nacionalidade" class="form-control">
-        </div>
-        <div class="mb-3">
-            <label>Foto</label>
-            <input type="file" name="foto" class="form-control" accept=".jpg,.jpeg,.png">
-        </div>
-        <button type="submit" class="btn btn-primary">Adicionar Autor</button>
-    </form>
-</div>
-</body>
-</html>
+    if($titulo && $ano && $capa && $autor){
+        move_uploaded_file($_FILES['capa']['tmp_name'], "../imagens/".$capa);
+        $stmt=$conn->prepare("INSERT INTO livros (titulo, ano, capa) VALUES (?,?,?)");
+        $stmt->bind_param("sis",$titulo,$ano,$capa);
+        $stmt->execute();
+        $livroId=$conn->insert_id;
+        $stmt2=$conn->prepare("INSERT INTO autor_livro (autor_id, livro_id) VALUES (?,?)");
+        $stmt2->bind_param("ii",$autor,$livroId);
+        $stmt2->execute();
+        echo "<p>Livro adicionado!</p>";
+    } else {
+        echo "<p>Preencha todos os campos.</p>";
+    }
+}
+$autores=$conn->query("SELECT id,nome FROM autores");
+include "../menu.php";
+?>
+<link rel="stylesheet" href="../css/style.css">
+<h2>Adicionar Livro</h2>
+<form method="post" enctype="multipart/form-data">
+  <label>Título* <input type="text" name="titulo" required></label>
+  <label>Ano* <input type="number" name="ano" min="1500" max="2099" required></label>
+  <label>Capa* <input type="file" name="capa" required></label>
+  <label>Autor*
+    <select name="autor" required>
+      <option value="">Selecione...</option>
+      <?php while($a=$autores->fetch_assoc()): ?>
+        <option value="<?= $a['id'] ?>"><?= $a['nome'] ?></option>
+      <?php endwhile; ?>
+    </select>
+  </label>
+  <button type="submit">Salvar</button>
+</form>
+<?php include "../footer.php"; ?>
 
 
 
