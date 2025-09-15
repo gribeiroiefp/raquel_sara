@@ -6,13 +6,11 @@ if (!$conn) {
 
 $msg = '';
 
-// Processa submissão do formulário para criar associação
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $livro_id = (int)($_POST['livro_id'] ?? 0);
     $autor_id = (int)($_POST['autor_id'] ?? 0);
 
     if ($livro_id > 0 && $autor_id > 0) {
-        // Verifica se a relação já existe
         $check = mysqli_query($conn, "SELECT * FROM autor_livro WHERE livro_id = $livro_id AND autor_id = $autor_id");
         if (mysqli_num_rows($check) === 0) {
             mysqli_query($conn, "INSERT INTO autor_livro (livro_id, autor_id) VALUES ($livro_id, $autor_id)");
@@ -25,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Processa exclusão via GET
 if (isset($_GET['delete_livro_id']) && isset($_GET['delete_autor_id'])) {
     $delete_livro_id = (int)$_GET['delete_livro_id'];
     $delete_autor_id = (int)$_GET['delete_autor_id'];
@@ -33,11 +30,9 @@ if (isset($_GET['delete_livro_id']) && isset($_GET['delete_autor_id'])) {
     $msg = "Associação removida com sucesso!";
 }
 
-// Pega todos os livros e autores para o formulário
 $livros_result = mysqli_query($conn, "SELECT id, titulo FROM livros ORDER BY titulo");
 $autores_result = mysqli_query($conn, "SELECT id, nome FROM autores ORDER BY nome");
 
-// Pega todas as associações para exibir na tabela
 $associacoes_result = mysqli_query($conn, "
     SELECT la.livro_id, la.autor_id, l.titulo, a.nome 
     FROM autor_livro la
@@ -56,6 +51,7 @@ mysqli_close($conn);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Associação de Autores e Livros</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 <div class="container my-4">
@@ -65,7 +61,6 @@ mysqli_close($conn);
         <div class="alert alert-info"><?= htmlspecialchars($msg, ENT_QUOTES) ?></div>
     <?php endif; ?>
 
-    <!-- Formulário para criar associação -->
     <form action="" method="post" class="mb-4">
         <div class="row g-3">
             <div class="col-md-5">
@@ -92,7 +87,6 @@ mysqli_close($conn);
         </div>
     </form>
 
-    <!-- Tabela de associações existentes -->
     <h4>Associações existentes</h4>
     <table class="table table-bordered table-striped">
         <thead>

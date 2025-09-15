@@ -4,13 +4,11 @@ if (!$conn) {
     die('Erro na ligação: ' . mysqli_connect_error());
 }
 
-// Pega o ID do autor
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 if ($id <= 0) {
     die("ID do autor não fornecido.");
 }
 
-// Pega os dados do autor
 $sql = "SELECT * FROM autores WHERE id = $id";
 $resultado = mysqli_query($conn, $sql);
 if (!$resultado || mysqli_num_rows($resultado) === 0) {
@@ -24,9 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = $_POST['nome'];
     $nascimento = $_POST['nascimento'];
     $nacionalidade = $_POST['nacionalidade'];
-    $foto_caminho = $autor['foto']; // mantém a foto atual por padrão
+    $foto_caminho = $autor['foto']; 
 
-    // Upload de nova foto (só se o usuário enviar)
     if (!empty($_FILES['foto']['name']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
         $diretorio = "uploads/pictures/";
         if (!is_dir(__DIR__ . "/" . $diretorio)) {
@@ -36,14 +33,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $foto_nome = time() . "_" . basename($_FILES['foto']['name']);
         if (getimagesize($_FILES['foto']['tmp_name'])) {
             move_uploaded_file($_FILES['foto']['tmp_name'], __DIR__ . "/" . $diretorio . $foto_nome);
-            $foto_caminho = $foto_nome; // só altera se o upload for válido
+            $foto_caminho = $foto_nome; 
         } else {
             $msg = "Erro: o ficheiro enviado não é uma imagem.";
         }
     }
 
     if (!$msg) {
-        // Atualiza apenas o autor selecionado
         $sql = "UPDATE autores SET 
                     nome='" . mysqli_real_escape_string($conn, $nome) . "', 
                     nascimento='" . mysqli_real_escape_string($conn, $nascimento) . "', 
@@ -52,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 WHERE id = $id";
         mysqli_query($conn, $sql);
 
-        // Atualiza $autor com os dados mais recentes
         $resultado = mysqli_query($conn, "SELECT * FROM autores WHERE id = $id");
         $autor = mysqli_fetch_assoc($resultado);
 
@@ -70,36 +65,47 @@ mysqli_close($conn);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Autor</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<div class="container my-4">
-    <h3><?= htmlspecialchars($autor['nome']) ?></h3>
-
-    <!-- Exibe a foto do autor ou imagem padrão -->
+<header class="container-fluid">
+    <div class="container-lg">
+        <div class="row align-items-center">
+            <h1 class="col-4">Editar Autor</h1>
+            <nav class="col text-end">
+                <a href="index.php">Página inicial</a>
+                <a href="pesquisa.php">Pesquisa</a>
+            </nav>
+        </div>
+    </div>
+</header>
+<div class="container-lg inserir">
+    <h2 class="mb-4"><?= htmlspecialchars($autor['nome']) ?></h2>
     <?php 
         $foto = (!empty($autor['foto']) && file_exists(__DIR__ . "/uploads/pictures/" . $autor['foto'])) 
                 ? "uploads/pictures/" . $autor['foto'] 
                 : "uploads/pictures/sem-foto.png"; 
     ?>
-    <div class="mb-3">
-        <img src="/Livros/<?= htmlspecialchars($foto) ?>" 
+    <div class="mb-4">
+        <img src="<?= htmlspecialchars($foto) ?>" 
              alt="Foto de <?= htmlspecialchars($autor['nome']) ?>" 
              class="img-thumbnail" style="max-width:200px;">
     </div>
-
-    <!-- Formulário de edição com confirmação -->
-    <form action="" method="post" enctype="multipart/form-data"
+    <form action="" method="post" enctype="multipart/form-data" class="mb-5 inserir"
           onsubmit="return confirm('Tem certeza que deseja salvar as alterações deste autor?')">
         <div class="mb-3">
-            <input type="text" name="nome" class="form-control" placeholder="Nome"
+            <label for="nome" class="form-label">Nome</label>
+            <input type="text" name="nome" id="nome" class="form-control" placeholder="Nome"
                    value="<?= htmlspecialchars($autor['nome']) ?>" required>
         </div>
         <div class="mb-3">
-            <input type="text" name="nascimento" class="form-control" placeholder="Nascimento"
+            <label for="nascimento" class="form-label">Nascimento</label>
+            <input type="text" name="nascimento" id="nascimento" class="form-control" placeholder="Nascimento"
                    value="<?= htmlspecialchars($autor['nascimento']) ?>" required>
         </div>
         <div class="mb-3">
-            <input type="text" name="nacionalidade" class="form-control" placeholder="Nacionalidade"
+            <label for="nacionalidade" class="form-label">Nacionalidade</label>
+            <input type="text" name="nacionalidade" id="nacionalidade" class="form-control" placeholder="Nacionalidade"
                    value="<?= htmlspecialchars($autor['nacionalidade']) ?>" required>
         </div>
         <div class="mb-3">
@@ -107,12 +113,20 @@ mysqli_close($conn);
             <input type="file" name="foto" id="foto" class="form-control">
             <small class="text-muted">Se não selecionar nenhuma foto a atual será mantida.</small>
         </div>
-        <button type="submit" class="btn btn-success">Salvar</button>
+        <button type="submit" class="btn btn-opcao">Salvar</button>
     </form>
 
     <?php if ($msg): ?>
         <div class="alert alert-info mt-3"><?= htmlspecialchars($msg) ?></div>
     <?php endif; ?>
 </div>
+<footer class="container-fluid text-center">
+    <div class="container-lg">
+        <p>&copy; 2025 Livros.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

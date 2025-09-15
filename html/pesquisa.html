@@ -1,10 +1,10 @@
-<!DOCTYPE php>
-<php lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Livros</title>
+    <title>Pesquisa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="stylesheet" href="css/styles.css">
@@ -14,7 +14,7 @@
     <header class="container-fluid">
         <div class="container-lg">
             <div class="row align-items-center">
-                <h1 class="col-4">Livros</h1>
+                <h1 class="col-4">Pesquisar</h1>
                 <nav class="col text-end">
                     <a href="index.php">Página inicial</a>
                     <a href="pesquisa.php">Pesquisa</a>
@@ -22,14 +22,34 @@
             </div>
         </div>
     </header>
-    <div>
-        <h3>José Saramago</h3>
-        <form action="">
-            <input type="text" name="nome" placeholder="Nome" value="José Saramago" required>
-            <input type="text" name="nascimento" placeholder="Nascimento" value="16-11-1922" required>
-            <input type="text" name="nacionalidade" placeholder="nascionalidade" value="Portugal" required>
-            <button type="submit">Pesquisar</button>
-        </form>
+    <div class="container-lg pesquisa">
+        <div class="pesquisa-form">
+            <h2>Pesquisa</h2>
+            <form action="">
+                <div class="sombra-form">
+                    <input type="text" name="texto" placeholder="Procurar por título" required>
+                    <button type="submit">Pesquisar</button>
+                </div>
+            </form>
+        </div>
+        <div class="lista col">
+            <h3>Resultados</h3>
+            <a href="livro.html" class="filme_link row align-items-end">
+                <img src="https://www.filmesnatv.pt/img/posters/tt0068646.jpg" alt="o padrinho" class="col-3">
+                <div class="livro col">
+                    <h3>Caim</h3>
+                    <p>2009</p>
+                </div>
+            </a>
+            <a href="livro.html" class="filme_link row align-items-end">
+                <img src="https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p5545_p_v13_at.jpg"
+                    alt="o padrinho" class="col-3">
+                <div class="livro col">
+                    <h3>Ensaio sobre a Cegueira</h3>
+                    <p>1995</p>
+                </div>
+            </a>
+        </div>
         <div class="editar">
             <h2>Opções</h2>
             <a href="inserir_livro.php" class="btn btn-primary">Inserir Livro</a>
@@ -46,4 +66,4 @@
         crossorigin="anonymous"></script>
 </body>
 
-</php>
+</html>
