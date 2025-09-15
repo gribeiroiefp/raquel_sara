@@ -1,4 +1,4 @@
-
+--Tabela autores
 
 CREATE TABLE autores (
     id INT AUTO_INCREMENT PRIMARY KEY,
