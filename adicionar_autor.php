@@ -1,4 +1,5 @@
 
+
 <?php include 'conexao.php'; ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -32,6 +33,3 @@
 </div>
 </body>
 </html>
-
-
-

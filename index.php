@@ -1,3 +1,4 @@
+
 <?php
 // Conexão com a base de dados
 $servername = "localhost";
@@ -36,7 +37,11 @@ $resultAutores = $conn->query($sqlAutores);
 <body>
 <div class="container mt-4">
     <h1 class="text-center mb-4">Livros e Autores</h1>
-
+        <nav class="col text-end">
+            <a href="pesquisa.php">Pesquisa</a>
+            <a href="autor.php?id=1">Autores</a>
+            <a href="livro.php?id=1">Livros</a>
+        </nav>
     <!-- Seção de Livros -->
     <h2 class="mb-3">📚 Livros Recentes</h2>
     <div class="row">
