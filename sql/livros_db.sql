@@ -1,5 +1,3 @@
-
-
 CREATE TABLE autores (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -8,7 +6,6 @@ CREATE TABLE autores (
     foto VARCHAR(255)
 );
 
---Tabela livros
 
 CREATE TABLE livros (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -17,7 +14,6 @@ CREATE TABLE livros (
     capa VARCHAR(255)
 );
 
---Tabela de relação autor_livro (para representar o relacionamento N:N):
 
 CREATE TABLE autor_livro (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -27,7 +23,6 @@ CREATE TABLE autor_livro (
     FOREIGN KEY (livro_id) REFERENCES livros(id) ON DELETE CASCADE
 );
 
---Inserção de Dados (mínimo 3 autores e 5 livros)
 
 INSERT INTO autores (nome, data_nascimento, nacionalidade, foto) VALUES
 ('José Saramago', '1922-11-16', 'Português', 'saramago.jpg'),
