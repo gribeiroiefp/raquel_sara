@@ -23,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ano = $_POST['ano'] ?? '';
     $capa_caminho = $livro['capa']; 
 
-    
     if (!empty($_FILES['capa']['name']) && $_FILES['capa']['error'] === UPLOAD_ERR_OK) {
         $diretorio = "uploads/capa/";
         if (!is_dir(__DIR__ . "/" . $diretorio)) {
@@ -33,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $capa_nome = time() . "_" . basename($_FILES['capa']['name']);
         if (getimagesize($_FILES['capa']['tmp_name'])) {
             move_uploaded_file($_FILES['capa']['tmp_name'], __DIR__ . "/" . $diretorio . $capa_nome);
-            $capa_caminho = $capa_nome; // só altera se o upload for válido
+            $capa_caminho = $capa_nome; 
         } else {
             $msg = "Erro: o ficheiro enviado não é uma imagem.";
         }
@@ -63,49 +62,68 @@ mysqli_close($conn);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Livro</title>
-    <nav class="col text-end">
-        <a href="index.php">Página inicial</a>
-        <a href="pesquisa.php">Pesquisa</a>
-    </nav>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<div class="container my-4">
-    <h3><?= htmlspecialchars($livro['titulo']) ?></h3>
+
+<header class="container-fluid">
+    <div class="container-lg">
+        <div class="row align-items-center">
+            <h1 class="col-4">Editar Livro</h1>
+            <nav class="col text-end">
+                <a href="index.php">Página inicial</a>
+                <a href="pesquisa.php">Pesquisa</a>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<div class="container-lg inserir">
+    <h2 class="mb-4"><?= htmlspecialchars($livro['titulo']) ?></h2>
 
     <?php 
         $capa = (!empty($livro['capa']) && file_exists(__DIR__ . "/uploads/capa/" . $livro['capa'])) 
                 ? "uploads/capa/" . $livro['capa'] 
                 : "uploads/capa/sem-capa.png"; 
     ?>
-    <div class="mb-3">
-        <img src="/Livros/<?= htmlspecialchars($capa) ?>" 
+    <div class="mb-4">
+        <img src="<?= htmlspecialchars($capa) ?>" 
              alt="Capa do livro <?= htmlspecialchars($livro['titulo']) ?>" 
              class="img-thumbnail" style="max-width:200px;">
     </div>
 
-    <!-- Formulário de edição -->
-    <form action="" method="post" enctype="multipart/form-data"
-      onsubmit="return confirm('Tem certeza que deseja salvar as alterações neste livro?')">
-    <div class="mb-3">
-        <input type="text" name="titulo" class="form-control" placeholder="Título"
-               value="<?= htmlspecialchars($livro['titulo']) ?>" required>
-    </div>
-    <div class="mb-3">
-        <input type="number" name="ano" class="form-control" placeholder="Ano"
-               value="<?= htmlspecialchars($livro['ano']) ?>" required>
-    </div>
-    <div class="mb-3">
-        <label for="capa" class="form-label">Capa do livro (opcional)</label>
-        <input type="file" name="capa" id="capa" class="form-control">
-        <small class="text-muted">Se não selecionar uma capa a atual será mantida.</small>
-    </div>
-    <button type="submit" class="btn btn-success">Salvar</button>
-</form>
+    <form action="" method="post" enctype="multipart/form-data" class="mb-5 inserir"
+          onsubmit="return confirm('Tem certeza que deseja salvar as alterações neste livro?')">
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Título"
+                   value="<?= htmlspecialchars($livro['titulo']) ?>" required>
+        </div>
+        <div class="mb-3">
+            <label for="ano" class="form-label">Ano</label>
+            <input type="number" name="ano" id="ano" class="form-control" placeholder="Ano"
+                   value="<?= htmlspecialchars($livro['ano']) ?>" required>
+        </div>
+        <div class="mb-3">
+            <label for="capa" class="form-label">Capa do livro (opcional)</label>
+            <input type="file" name="capa" id="capa" class="form-control">
+            <small class="text-muted">Se não selecionar uma capa, a atual será mantida.</small>
+        </div>
+        <button type="submit" class="btn btn-opcao">Salvar</button>
+    </form>
 
     <?php if ($msg): ?>
         <div class="alert alert-info mt-3"><?= htmlspecialchars($msg) ?></div>
     <?php endif; ?>
 </div>
+<footer class="container-fluid text-center">
+    <div class="container-lg">
+        <p>&copy; 2025 Livros.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+

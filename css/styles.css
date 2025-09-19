@@ -1,0 +1,288 @@
+body {
+    background:#d2f7d4;
+}
+
+header {
+    background-color: #376b42;
+}
+
+header div {
+    padding: 4px 0;
+    color: white;
+}
+
+header div a {
+    color: white;
+    text-decoration: none;
+    margin-left: 30px;
+}
+
+header div a:hover {
+    opacity: 0.7;
+}
+
+.pesquisa .pesquisa-form {
+    padding-top: 80px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid #adadad;
+    display: flex;           
+    flex-direction: column;     
+    align-items: center;
+    
+}
+
+.pesquisa .pesquisa-form form {
+    margin-top: 30px;
+}
+
+.pesquisa .pesquisa-form form .sombra-form {
+    width: fit-content;
+    margin: auto;
+    box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 0.75);
+}
+
+.pesquisa .pesquisa-form input {
+    line-height: 32px;
+    padding: 8px 16px;
+    border: none;
+    width: 420px;
+    display: inline-block;
+    outline: none;
+}
+
+.pesquisa .pesquisa-form button {
+    background: #3d6b37;
+    color: white;
+    height: 48px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 3px;
+    margin-left: -4px;
+    padding: 0 28px;
+}
+
+.lista {
+    padding-top: 50px;
+    
+}
+
+.lista h3 {
+    padding-bottom: 30px;
+}
+
+.lista a {
+    margin: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: black;
+    text-decoration: none;
+    background-color: #c7dfc9;
+}
+
+.lista a:hover {
+    opacity: 0.7;
+}
+
+.home {
+    padding-top: 30px;
+}
+
+.home h1 {
+    padding-bottom: 30px;
+    padding-top: 80px;
+}
+.editar {
+    padding-bottom: 80px;
+}
+.editar h2 {
+    padding-bottom: 30px;
+    padding-top: 80px;
+
+}
+
+.home .livro-recente-cont {
+    min-height: 450px;
+}
+
+.home .livro-recente {
+    height: 100%;
+    background: black;
+    background-position: center;
+    background-size: cover;
+}
+.home .livro-recente .row{
+    height: 100%;
+    padding: 10px;
+    background: rgba(1, 1, 1, 0.4);
+}
+
+.home .livro-recente .row:hover{
+    background: rgba(1, 1, 1, 0.6);
+}
+
+.home .livro-recente a{
+    color: white;
+    text-decoration: none;
+    height: 100%;
+}
+
+.autor h2{
+    margin: 0;
+    padding-top: 80px;
+    padding-bottom: 30px;
+}
+
+.autor .informacao, .livro .info{
+    color: black;
+    font-size: 18px;
+}
+.autor .informacao span, .livro .info span{
+    font-weight: bold;
+}
+
+h2 {
+    padding-left: 12%;
+
+}
+nav{
+    background-color: #376b42;
+}
+
+.livro h2 {
+    padding-bottom: 30px;
+    padding-left: 20px;
+}
+.livro .info{
+    padding-top: 80px;
+}
+
+.livro .opcoes a.btn-editar,
+.autor .opcoes a.btn-editar{    
+    margin-bottom: 6px;
+}
+
+.btn-editar {
+    background-color: #28a745; 
+    border: none;
+    color: white;
+}
+.btn-editar:hover {
+    background-color: #218838; 
+    color: white;
+}
+
+.btn-opcao {
+    background-color: #28a745; 
+    border: none;
+    color: white;
+}
+.btn-opcao:hover {
+    background-color: #218838;
+    color: white;
+}
+
+.btn-inserir-livro {
+    background-color: #28a745;
+    border: none;
+    color: white;
+}
+.btn-inserir-livro:hover {
+    background-color: #218838;
+    color: white;
+}
+
+.btn-inserir-autor {
+    background-color: #28a745;
+    border: none;
+    color: white;
+}
+.btn-inserir-autor:hover {
+    background-color: #218838;
+    color: white;
+}
+
+.btn-remover {
+    background-color: #dc3545; 
+    border: none;
+    color: white;
+}
+.btn-remover:hover {
+    background-color: #c82333;
+    color: white;
+}
+
+form.inserir {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #f8f9fa; 
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+form.iserir input[type="text"],
+form.iserir input[type="number"],
+form.iserir textarea,
+form.iserir input[type="file"] {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+form.iserir input[type="text"]:focus,
+form.iserir input[type="number"]:focus,
+form.iserir textarea:focus,
+form.iserir input[type="file"]:focus {
+  border-color: #0dfd35; 
+  outline: none;
+}
+
+form.iserir textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+form.iserir label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #333;
+}
+div.inserir{
+    padding-top: 80px;
+}
+
+.foto{
+    max-width: 150px;
+    margin-right:20px
+}
+
+
+@media (max-width: 600px) {
+  form {
+    margin: 1rem;
+    padding: 1rem;
+  }
+}
+
+footer {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding: 15px 0;
+    width: 100% !important;  
+    text-align: center;
+    background-color: #4b8049
+}
+
+footer p {
+    margin: 0;
+    color: white
+    
+}
